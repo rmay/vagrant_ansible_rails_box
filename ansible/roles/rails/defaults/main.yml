@@ -1,0 +1,7 @@
+rails_required_packages:
+  - fontconfig
+  - ghostscript
+  - graphicsmagick
+  - imagemagick
+  - nodejs
+  - tzdata

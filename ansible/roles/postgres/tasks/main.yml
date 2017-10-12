@@ -1,0 +1,73 @@
+- name: install postgres dependencies
+  become: yes
+  become_user: root
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - "{{ postgres_required_packages }}"
+  tags:
+    - postgres
+
+- name: get postgres apt key
+  become: yes
+  become_user: root
+  apt_key:
+    url: "{{ postgres_apt_key }}"
+  tags:
+    - postgres
+
+- name: add postgres repo
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: "{{ postgres_apt_repo }}"
+  tags:
+    - postgres
+
+- name: install postgres
+  become: yes
+  become_user: root
+  apt:
+    name: "postgresql-{{postgres_version}}"
+    state: latest
+    update_cache: true
+  tags:
+    - postgres
+
+- name: start postgres
+  become: yes
+  become_user: root
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+  tags:
+    - postgres
+
+- name: create database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ db_name }}"
+    encoding: 'UTF-8'
+    lc_collate: 'en_US.UTF-8'
+    lc_ctype: 'en_US.UTF-8'
+    template: 'template0'
+    state: present
+  tags:
+    - postgres
+
+- name: setup database user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    db: "{{ db_name }}"
+    name: "{{ db_user }}"
+    password: "{{ db_pass }}"
+    priv: ALL
+    role_attr_flags: SUPERUSER
+    state: present
+  tags:
+    - postgres

@@ -1,0 +1,19 @@
+ruby_required_packages:
+  - autoconf
+  - bison
+  - build-essential
+  - libffi-dev
+  - libgdbm3
+  - libgdbm-dev
+  - libncurses5-dev
+  - libreadline6-dev
+  - libssl-dev
+  - libxml2-dev
+  - libyaml-dev
+  - zlib1g-dev
+  - rubygems
+
+ruby_version: "{{ lookup('env', 'RUBY_VERSION') }}"
+
+rbenv_repo: https://github.com/rbenv/rbenv.git
+ruby_build_repo: https://github.com/rbenv/ruby-build.git

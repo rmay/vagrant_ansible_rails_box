@@ -1,0 +1,12 @@
+- name: install ruby dependencies
+  become: yes
+  become_user: root
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - "{{ ruby_required_packages }}"
+
+- include: rbenv.yml
+- include: ruby.yml

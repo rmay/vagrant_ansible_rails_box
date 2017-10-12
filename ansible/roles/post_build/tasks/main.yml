@@ -1,0 +1,31 @@
+- name: update packages
+  become: yes
+  become_user: root
+  apt:
+    upgrade: dist
+  tags:
+    - post_build
+
+- name: clean up files
+  become: yes
+  become_user: root
+  file:
+    path: "{{ home_dir }}/{{ item }}"
+    state: absent
+  with_items:
+    - .wget-hsts
+    - .cache
+  tags:
+    - post_build
+
+- name: symlink to projects dir
+  become: yes
+  become_user: root
+  file:
+    src: /vagrant/projects
+    dest: "{{ home_dir }}/projects"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    state: link
+  tags:
+    - post_build

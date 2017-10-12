@@ -1,0 +1,4 @@
+user_name: "{{ lookup('env', 'GIT_FULL_NAME') }}"
+user_email: "{{ lookup('env', 'GIT_EMAIL') }}"
+
+credential_helper: osxkeychain

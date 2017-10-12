@@ -1,0 +1,30 @@
+- name: install python dependencies
+  become: yes
+  become_user: root
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - "{{ python_required_packages }}"
+  tags:
+    - python
+
+- name: upgrade pip
+  become: yes
+  become_user: root
+  pip:
+    name: pip
+    extra_args: --upgrade
+  tags:
+    - python
+
+- name: upgrade pip3
+  become: yes
+  become_user: root
+  pip:
+    name: pip
+    extra_args: --upgrade
+    executable: pip3
+  tags:
+    - python

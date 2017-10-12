@@ -1,0 +1,23 @@
+- name: clone rbenv
+  git:
+    repo: "{{ rbenv_repo }}"
+    dest: "{{ home_dir }}/.rbenv"
+  tags:
+    - rbenv
+
+- name: clone ruby-build repo
+  git:
+    repo: "{{ ruby_build_repo }}"
+    dest: "{{ home_dir }}/.rbenv/plugins/ruby-build"
+  tags:
+    - rbenv
+
+- name: add rbenv to path and autoload
+  blockinfile:
+    path: "{{ home_dir }}/.zshrc.local"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR RBENV"
+    block: |
+      export PATH="$HOME/.rbenv/bin:$PATH"
+      eval "$(rbenv init -)"
+  tags:
+    - rbenv

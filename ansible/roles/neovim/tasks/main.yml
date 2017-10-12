@@ -1,0 +1,52 @@
+- name: add nvim repo
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: "{{ neovim_repo }}"
+  tags:
+    - neovim
+
+- name: install neovim
+  become: yes
+  become_user: root
+  apt:
+    name: "{{ neovim_package }}"
+    state: latest
+    update_cache: yes
+  tags:
+    - neovim
+
+- name: install python 2 plugin for neovim
+  pip:
+    name: neovim
+    extra_args: --user
+  tags:
+    - neovim
+
+- name: install python 3 plugin for neovim
+  pip:
+    name: neovim
+    extra_args: --user
+    executable: pip3
+  tags:
+    - neovim
+
+- name: update vim to use neovim
+  become: yes
+  become_user: root
+  alternatives:
+    name: vim
+    path: /usr/bin/nvim
+  tags:
+    - neovim
+
+- name: update editor to use neovim
+  become: yes
+  become_user: root
+  alternatives:
+    name: editor
+    path: /usr/bin/nvim
+  tags:
+    - neovim
+
+- include: plugins.yml

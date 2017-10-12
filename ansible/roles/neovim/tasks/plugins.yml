@@ -1,0 +1,37 @@
+- name: "create {{ neovim_config_dir }}/autoload directory"
+  file:
+    path: "{{ neovim_config_dir }}/autoload"
+    state: directory
+  tags:
+    - neovim
+
+- name: install vim-plug
+  get_url:
+    url: "{{ vim_plug_repo }}"
+    dest: "{{ neovim_config_dir }}/autoload/plug.vim"
+    force: yes
+  tags:
+    - neovim
+
+- name: copy init.vim
+  copy:
+    src: "{{ role_path }}/files/init.vim"
+    dest: "{{ neovim_config_dir }}/init.vim"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  tags:
+    - neovim
+
+- name: copy config directory
+  copy:
+    src: "{{ role_path }}/files/config"
+    dest: "{{ neovim_config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  tags:
+    - neovim
+
+- name: install vim plugins 
+  command: nvim "+silent! PlugInstall!" +qall!
+  tags:
+    - neovim

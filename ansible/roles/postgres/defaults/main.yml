@@ -1,0 +1,14 @@
+postgres_required_packages:
+  - postgresql-common
+  - python-psycopg2
+  - libpq-dev
+
+postgres_apt_key: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
+
+postgres_apt_repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_lsb.codename}}-pgdg main"
+
+postgres_version: "{{ lookup('env', 'PG_VERSION') }}"
+
+db_name: "{{ lookup('env', 'PG_DB_NAME') }}"
+db_user: "{{ lookup('env', 'PG_USER_NAME') }}"
+db_pass: "{{ lookup('env', 'PG_PASSWORD') }}"

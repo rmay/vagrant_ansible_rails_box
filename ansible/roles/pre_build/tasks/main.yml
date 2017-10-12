@@ -1,0 +1,11 @@
+- name: install general dependencies
+  become: yes
+  become_user: root
+  apt:
+    name: "{{ item }}"
+    state: installed
+    update_cache: yes
+  with_items:
+    - "{{ general_required_packages }}"
+  tags:
+    - pre_build

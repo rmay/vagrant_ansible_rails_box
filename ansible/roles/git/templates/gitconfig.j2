@@ -1,0 +1,31 @@
+[user]
+        name = {{ user_name }}
+        email = {{ user_email }}
+[hub]
+        protocol = https
+[alias]
+        aa = add -A
+        st = status
+        co = checkout
+        count = !git shortlog -sn
+        lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[apply]
+        whitespace = nowarn
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+        ui = true
+[core]
+        excludesfile = ~/.gitignore
+        editor = vim
+[credential]
+	helper = {{ credential_helper }}
+[diff]
+	tool = Kaleidoscope
+[help]
+        autocorrect = 1
+[push]
+        default = simple
+[pull]
+	default = current

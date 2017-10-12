@@ -1,0 +1,83 @@
+- name: install zsh
+  become: yes
+  become_user: root
+  apt:
+    name: zsh
+    state: latest
+  tags:
+    - zsh
+
+- name: "switch {{ user }} shell to zsh"
+  become: yes
+  become_user: root
+  user:
+    name: "{{ user }}"
+    shell: /bin/zsh
+  tags:
+    - zsh
+
+- name: copy zshrc file
+  copy:
+    src: "{{ role_path }}/files/zshrc"
+    dest: "{{ home_dir }}/.zshrc"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  tags:
+    - zsh
+
+- name: copy zshrc config files
+  copy:
+    src: "{{ role_path }}/files/zsh/"
+    dest: "{{ home_dir }}/.zsh"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  tags:
+    - zsh
+
+- name: create .zlogin file
+  file:
+    path: "{{ home_dir }}/.zlogin"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    state: touch
+  tags:
+    - zsh
+
+- name: add login commands
+  blockinfile:
+    path: "{{ home_dir}}/.zlogin"
+    block: |
+      cd /vagrant/projects
+  tags:
+    - zsh
+
+- name: create .zshrc.local file
+  file:
+    path: "{{ home_dir }}/.zshrc.local"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    state: touch
+  tags:
+    - zsh
+
+- name: create .zsh/.zhistory file
+  file:
+    path: "{{ home_dir }}/.zsh/.zhistory"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    state: touch
+  tags:
+    - zsh
+
+- name: delete bash files
+  become: yes
+  become_user: root
+  file:
+    path: "{{ home_dir }}/{{ item }}"
+    state: absent
+  with_items:
+    - .bash_logout
+    - .bashrc
+    - .profile
+  tags:
+    - zsh

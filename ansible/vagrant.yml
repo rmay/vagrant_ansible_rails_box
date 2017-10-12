@@ -1,0 +1,16 @@
+- hosts: all
+  vars:
+    user: vagrant
+    group: vagrant
+    home_dir: /home/vagrant
+  roles:
+    - pre_build
+    - zsh
+    - git
+    - python
+    - redis
+    - postgres
+    - ruby
+    - rails
+    - neovim
+    - post_build

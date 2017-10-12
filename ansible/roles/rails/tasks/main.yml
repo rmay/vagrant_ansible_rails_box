@@ -1,0 +1,21 @@
+- name: install rails dependencies
+  become: yes
+  become_user: root
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - "{{ rails_required_packages }}"
+  tags:
+    - rails
+
+- name: update shell aliases, path, etc.
+  blockinfile:
+    path: "{{ home_dir}}/.zshrc.local"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR RAILS"
+    block: |
+      export PATH="./bin:$PATH"
+      alias start_rails="bundle exec rails s -b 0.0.0.0"
+  tags:
+    - rails

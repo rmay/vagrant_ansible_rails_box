@@ -1,0 +1,4 @@
+general_required_packages:
+  - build-essential
+  - git
+  - silversearcher-ag

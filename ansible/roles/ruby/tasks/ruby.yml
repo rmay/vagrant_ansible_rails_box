@@ -1,0 +1,42 @@
+- name: get currently installed ruby version
+  shell: "{{ home_dir }}/.rbenv/bin/rbenv versions | grep {{ ruby_version }}"
+  register: ruby_installed
+  ignore_errors: true
+  tags:
+    - ruby
+
+- name: install ruby
+  shell: "{{ home_dir }}/.rbenv/bin/rbenv install {{ ruby_version }}"
+  when: ruby_installed|failed
+  tags:
+    - ruby
+
+- name: set global ruby version
+  shell: "{{ home_dir }}/.rbenv/bin/rbenv global {{ ruby_version }}"
+  when: ruby_installed|failed
+  tags:
+    - ruby
+
+- name: setup .gemrc file
+  blockinfile:
+    path: "{{ home_dir }}/.gemrc"
+    block: |
+      :update_sources: true
+      :verbose: true
+      :backtrace: false
+      :benchmark: false
+      gem: --no-document
+    create: yes
+    state: present
+  when: ruby_installed|failed
+  tags:
+    - ruby
+
+- name: install gems
+  command: "{{ home_dir }}/.rbenv/shims/gem install {{ item }}"
+  with_items:
+    - bundler
+    - neovim
+  when: ruby_installed|failed
+  tags:
+    - ruby

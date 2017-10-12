@@ -1,0 +1,6 @@
+.DS_Store
+.env
+.vagrant
+ansible/vagrant.retry
+projects/*
+!projects/.gitkeep
