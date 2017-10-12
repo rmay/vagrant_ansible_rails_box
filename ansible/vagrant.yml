@@ -8,7 +8,7 @@
     - zsh
     - git
     - python
-    # - redis
+    - redis
     - postgres
     - ruby
     - rails

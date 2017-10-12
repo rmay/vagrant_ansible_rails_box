@@ -1,3 +1,19 @@
+- name: update apt
+  become: yes
+  become_user: root
+  apt:
+    update_cache: yes
+  tags:
+    - pre_build
+
+- name: upgrade packages
+  become: yes
+  become_user: root
+  apt:
+    upgrade: dist
+  tags:
+    - pre_build
+
 - name: install general dependencies
   become: yes
   become_user: root

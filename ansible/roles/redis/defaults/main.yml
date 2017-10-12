@@ -1,0 +1,6 @@
+redis_required_packages:
+  - make
+  - build-essential
+  - tcl8.5
+
+redis_port: 6379 
