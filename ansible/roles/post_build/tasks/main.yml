@@ -1,11 +1,3 @@
-- name: update packages
-  become: yes
-  become_user: root
-  apt:
-    upgrade: dist
-  tags:
-    - post_build
-
 - name: clean up files
   become: yes
   become_user: root

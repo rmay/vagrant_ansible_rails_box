@@ -8,5 +8,5 @@
   with_items:
     - "{{ ruby_required_packages }}"
 
-- include: rbenv.yml
-- include: ruby.yml
+- include_tasks: rbenv.yml
+- include_tasks: ruby.yml

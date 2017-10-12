@@ -49,4 +49,4 @@
   tags:
     - neovim
 
-- include: plugins.yml
+- include_tasks: plugins.yml
