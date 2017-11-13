@@ -14,7 +14,7 @@
 
 #### Intall [Vagrant](https://www.vagrantup.com)
 
-`brew install vagrant`
+`brew cask install vagrant`
 
 #### Install [VirtualBox](https://www.virtualbox.org)
 
@@ -118,3 +118,15 @@ start_rails
 Your Rails port `3000` within Vagrant will be mapped to `3001` in your host machine
 
 So just point your browser to `http://localhost:3001`
+
+---
+
+## 4. Stopping and restarting vagrant
+
+Once you are done with your vagrant environment but want to keep it around,
+`sh -ac '. ./.env; vagrant halt'` will stop the image but not discard it.
+
+If you want to spin it back up,
+`sh -ac '. ./.env; vagrant reload --provision'` will get you going again.
+
+Just `vagrant ssh` when it's ready and you're back in business.
